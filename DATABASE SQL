@@ -1,0 +1,64 @@
+CREATE TABLE Sola
+(
+    SolaId INT IDENTITY PRIMARY KEY,
+    Ime NVARCHAR(128) NOT NULL,
+    Program NVARCHAR(128) NOT NULL,
+    Lokacija NVARCHAR(128) NOT NULL,
+)
+
+CREATE TABLE Tema
+(
+    TemaId INT IDENTITY PRIMARY KEY,
+    Ime NVARCHAR(128) NOT NULL,
+    VTestu BIT NOT NULL,
+    PredmetId INT REFERENCES Predmet (PredmetId),
+    TestId INT REFERENCES Test (TestId),
+)
+
+CREATE TABLE Ucenec
+(
+    UcenecId INT IDENTITY PRIMARY KEY,
+    Ime NVARCHAR(128) NOT NULL,
+    Priimek NVARCHAR(128) NOT NULL,
+    UporabniskoIme CHAR (128)NOT NULL,
+    Geslo CHAR(128) NOT NULL,
+    SolaId INT REFERENCES Sola (SolaId),
+    RazredId INT REFERENCES Razred (RazredId),
+)
+
+CREATE TABLE Razred
+(
+    RazredId INT IDENTITY PRIMARY KEY,
+    Oddelek CHAR(128) NOT NULL,
+    SolaId INT REFERENCES Sola (SolaId),
+)
+
+CREATE TABLE Test
+(
+    TestId INT IDENTITY PRIMARY KEY,
+    Datum DATE NOT NULL,
+    CasCelotnegaUcenja TIME NOT NULL,
+    CasUcinkovitegaUcenja  TIME NOT NULL,
+    KoncnaOcena TINYINT NOT NULL,
+    ProfesorId INT REFERENCES Profesor (ProfesorId),
+    RazredId INT REFERENCES Razred (RazredId),
+    UporabnikId INT REFERENCES Uporabnik (UporabnikId),
+    PredmetId INT REFERENCES Predmet (PredmetId),
+    SnovId INT REFERENCES Snov (SnovId),
+)
+
+CREATE TABLE Predmet
+(
+    PredmetId INT IDENTITY PRIMARY KEY,
+    Ime NVARCHAR(128) NOT NULL,
+    SolaId INT REFERENCES Sola (SolaId),
+)
+
+CREATE TABLE Profesor
+(
+    ProfesorId INT IDENTITY PRIMARY KEY,
+    Ime NVARCHAR(128) NOT NULL,
+    Priimek NVARCHAR(128) NOT NULL,
+    PredmetId INT REFERENCES Predmet (PredmetId),
+    SolaId INT REFERENCES Sola (SolaId),
+)
