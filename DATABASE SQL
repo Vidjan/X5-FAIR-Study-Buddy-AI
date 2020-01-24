@@ -51,7 +51,7 @@ CREATE TABLE Test
     KoncnaOcena TINYINT NOT NULL,
     ProfesorId INT REFERENCES Profesor (ProfesorId),
     RazredId INT REFERENCES Razred (RazredId),
-    UporabnikId INT REFERENCES Uporabnik (UporabnikId),
+    UcenecId INT REFERENCES Ucenec (UcenecId),
     PredmetId INT REFERENCES Predmet (PredmetId),
 )
 
