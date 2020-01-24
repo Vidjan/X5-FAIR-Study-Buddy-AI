@@ -6,14 +6,30 @@ CREATE TABLE Sola
     Lokacija NVARCHAR(128) NOT NULL,
 )
 
-CREATE TABLE Tema
+CREATE TABLE Predmet
 (
-    TemaId INT IDENTITY PRIMARY KEY,
+    PredmetId INT IDENTITY PRIMARY KEY,
     Ime NVARCHAR(128) NOT NULL,
-    VTestu BIT NOT NULL,
-    PredmetId INT REFERENCES Predmet (PredmetId),
-    TestId INT REFERENCES Test (TestId),
+    SolaId INT REFERENCES Sola (SolaId),
 )
+
+CREATE TABLE Razred
+(
+    RazredId INT IDENTITY PRIMARY KEY,
+    Oddelek CHAR(128) NOT NULL,
+    SolaId INT REFERENCES Sola (SolaId),
+)
+
+CREATE TABLE Profesor
+(
+    ProfesorId INT IDENTITY PRIMARY KEY,
+    Ime NVARCHAR(128) NOT NULL,
+    Priimek NVARCHAR(128) NOT NULL,
+    PredmetId INT REFERENCES Predmet (PredmetId),
+    SolaId INT REFERENCES Sola (SolaId),
+)
+
+
 
 CREATE TABLE Ucenec
 (
@@ -24,13 +40,6 @@ CREATE TABLE Ucenec
     Geslo CHAR(128) NOT NULL,
     SolaId INT REFERENCES Sola (SolaId),
     RazredId INT REFERENCES Razred (RazredId),
-)
-
-CREATE TABLE Razred
-(
-    RazredId INT IDENTITY PRIMARY KEY,
-    Oddelek CHAR(128) NOT NULL,
-    SolaId INT REFERENCES Sola (SolaId),
 )
 
 CREATE TABLE Test
@@ -44,21 +53,13 @@ CREATE TABLE Test
     RazredId INT REFERENCES Razred (RazredId),
     UporabnikId INT REFERENCES Uporabnik (UporabnikId),
     PredmetId INT REFERENCES Predmet (PredmetId),
-    SnovId INT REFERENCES Snov (SnovId),
 )
 
-CREATE TABLE Predmet
+CREATE TABLE Tema
 (
-    PredmetId INT IDENTITY PRIMARY KEY,
+    TemaId INT IDENTITY PRIMARY KEY,
     Ime NVARCHAR(128) NOT NULL,
-    SolaId INT REFERENCES Sola (SolaId),
-)
-
-CREATE TABLE Profesor
-(
-    ProfesorId INT IDENTITY PRIMARY KEY,
-    Ime NVARCHAR(128) NOT NULL,
-    Priimek NVARCHAR(128) NOT NULL,
+    VTestu BIT NOT NULL,
     PredmetId INT REFERENCES Predmet (PredmetId),
-    SolaId INT REFERENCES Sola (SolaId),
+    TestId INT REFERENCES Test (TestId),
 )
